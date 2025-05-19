@@ -1,19 +1,24 @@
-name: Executar srcipt de temperatures Manresa
+name: Executar script de temperatures diari a les 23:59
+
 on:
-  workflow_dispatch:
+  schedule:
+    - cron: '59 23 * * *'
+
+permissions:
+  contents: write
 
 jobs:
   run-script:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clonar el repositori
+      - name: Checkout del codi
         uses: actions/checkout@v3
 
-      - name: Configuració Python
+      - name: Configurar Python
         uses: actions/setup-python@v4
         with:
-         python-version: '3.11'
+          python-version: '3.11'
 
       - name: Instal·lar dependències
         run: |
@@ -23,4 +28,10 @@ jobs:
         run: |
           python obtenir_temperatures.py
 
-
+      - name: Pujar fitxer .json
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add temp_*.json
+          git commit -m "Actualització automàtica de temperatures" || echo "No hi ha canvis per commitejar"
+          git push
