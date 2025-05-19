@@ -2,7 +2,7 @@ name: Executar script de temperatures diari a les 23:59
 
 on:
   schedule:
-    - cron: '59 23 * * *'
+    - cron: '*/5 * * * *'
 
 permissions:
   contents: write
