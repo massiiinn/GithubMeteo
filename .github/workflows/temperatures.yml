@@ -21,5 +21,6 @@ jobs:
 
       - name: Executar script de temperatures
         run: |
-          python obtenir_temperatures.py
+          python Desktop/GitHubMeteo/obtenir_temperatures.py
+
 
